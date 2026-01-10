@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   ## StateManagement
+  bloc: ^9.2.0
   flutter_bloc: ^9.1.1
   feature_structure: ^1.0.4
 
@@ -24,7 +25,8 @@ dependencies:
   ## UI
   flutter_screenutil: ^5.9.3
   lottie: ^3.3.2
-  google_maps_flutter: ^2.14.0
+  flutter_svg: ^2.2.3
+  flutter_staggered_animations: ^1.1.1
 
   
   ## Error handling
@@ -41,12 +43,12 @@ dependencies:
 
   ## Router
   go_router: ^17.0.1
-  bloc: ^9.2.0
-  flutter_staggered_animations: ^1.1.1
+
+  ## Map
+  google_maps_flutter: ^2.14.0
   geolocator: ^14.0.2
   geocoding: ^4.0.0
   google_polyline_algorithm: ^3.1.0
-  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
