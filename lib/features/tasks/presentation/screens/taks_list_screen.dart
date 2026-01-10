@@ -23,6 +23,7 @@ class _TaksListScreenState extends State<TaksListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      drawer: _drawer(context),
       appBar: _appBar(),
       body: _body(),
     );
@@ -59,7 +60,15 @@ class _TaksListScreenState extends State<TaksListScreen> {
 
   AppBar _appBar() {
     return AppBar(
-      leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+      ),
+
       title: Text(
         'tasks'.tr(),
         style: TextStyle(
@@ -81,6 +90,70 @@ class _TaksListScreenState extends State<TaksListScreen> {
       ],
       centerTitle: true,
       backgroundColor: AppColors.backgroundColor,
+    );
+  }
+
+  Widget _drawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: AppColors.backgroundColor,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Text(
+                'language'.tr(),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+              ),
+            ),
+            _languageTile(
+              context,
+              title: 'English',
+              locale: const Locale('en'),
+            ),
+            _languageTile(
+              context,
+              title: 'Русский',
+              locale: const Locale('ru'),
+            ),
+            _languageTile(
+              context,
+              title: 'Azərbaycan',
+              locale: const Locale('az'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _languageTile(
+    BuildContext context, {
+    required String title,
+    required Locale locale,
+  }) {
+    final isSelected = context.locale == locale;
+
+    return ListTile(
+      leading: Icon(
+        Icons.language,
+        color: isSelected ? AppColors.blueColor : Colors.grey,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        ),
+      ),
+      trailing: isSelected
+          ? Icon(Icons.check, color: AppColors.blueColor)
+          : null,
+      onTap: () async {
+        await context.setLocale(locale);
+        Navigator.of(context).pop(); // drawer bağlanır
+      },
     );
   }
 }

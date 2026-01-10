@@ -43,6 +43,10 @@ dependencies:
   go_router: ^17.0.1
   bloc: ^9.2.0
   flutter_staggered_animations: ^1.1.1
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
+  google_polyline_algorithm: ^3.1.0
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +60,8 @@ flutter:
   assets:
     - assets/translations/
     - assets/jsons/
+    - assets/icons/
+
 
 
   # fonts:

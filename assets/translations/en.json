@@ -1,6 +1,7 @@
 {
   "tasks": "Tasks",
   "loading": "Loading...",
+  "language": "Language",
   "scan": "Scan",
   "handover": "Handover",
   "completed": "Completed",

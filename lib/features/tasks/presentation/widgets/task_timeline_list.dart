@@ -5,6 +5,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/enums/status_enum.dart';
 import '../../data/models/task_list_model.dart';
+import '../screens/task_detail_screen.dart';
+import 'task_info_detail.dart';
 
 class TaskTimelineList extends StatelessWidget {
   const TaskTimelineList({super.key, required this.tasks});
@@ -50,7 +52,11 @@ class TaskTimelineItem extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         if (task.status == 'in_progress') {
-          print('in progress');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => TaskDetailScreen(id: task.taskId),
+            ),
+          );
         }
       },
       child: Row(
@@ -64,67 +70,16 @@ class TaskTimelineItem extends StatelessWidget {
           ),
           12.horizontalSpace,
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                4.verticalSpace,
-                Text(
-                  task.title,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                4.verticalSpace,
-                Text(
-                  task.address,
-                  style: TextStyle(fontSize: 16.sp, color: Colors.grey),
-                ),
-                12.verticalSpace,
-                Row(
-                  children: [
-                    _InfoItem(Icons.access_time_filled, "${task.etaMin} min"),
-                    12.w.horizontalSpace,
-                    _InfoItem(
-                      Icons.location_on_rounded,
-                      '${task.distanceKm} km',
-                    ),
-                    12.w.horizontalSpace,
-                    _InfoItem(
-                      Icons.inventory_2_rounded,
-                      "${task.packagesCount} bags",
-                    ),
-                  ],
-                ),
-                16.verticalSpace,
-                Divider(thickness: 1, color: Color(0xFFF0F0F0), height: 0),
-                8.verticalSpace,
-              ],
+            child: TaskInfoDetail(
+              address: task.address,
+              distanceKm: task.distanceKm,
+              etaMin: '${task.etaMin} min',
+              packagesCount: task.packagesCount,
+              title: task.title,
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _InfoItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _InfoItem(this.icon, this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 19.sp, color: Colors.grey),
-        4.w.horizontalSpace,
-        Text(
-          text,
-          style: TextStyle(fontSize: 16.sp, color: Colors.grey.shade700),
-        ),
-      ],
     );
   }
 }
