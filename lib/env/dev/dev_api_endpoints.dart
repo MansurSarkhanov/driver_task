@@ -1,0 +1,11 @@
+import 'package:driver_task/core/extensions/api_extension.dart';
+
+import '../api_endpoints.dart';
+
+final class DevApiEndpoints implements ApiEndpoints {
+  @override
+  String get tasksList => '/tasks'.connectToService();
+
+  @override
+  String get taskDetail => '/tasks'.connectToService();
+}

@@ -1,0 +1,8 @@
+{
+  "tasks": "Tasks",
+  "loading": "Loading...",
+  "scan": "Scan",
+  "handover": "Handover",
+  "completed": "Completed",
+  "failed": "Failed"
+}
