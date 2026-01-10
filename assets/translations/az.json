@@ -2,8 +2,9 @@
   "tasks": "Tapşırıqlar",
   "loading": "Yüklenir...",
   "language": "Dil",
-  "scan": "Oxu",
-  "handover": "Təhvil ver",
-  "completed": "Tamamlandı",
-  "failed": "Uğursuz"
+  "complated_task": "Tapşırıq tamamlanmışdır!",
+  "list": "Siyahı",
+  "map": "Xəritə",
+  "min": "dəq",
+  "bags": "bağlama"
 }

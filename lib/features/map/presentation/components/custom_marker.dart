@@ -20,7 +20,7 @@ class CustomMarker {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
 
-    final paintBlack = Paint()..color = Colors.black;
+    final paintBlack = Paint()..color = Color(0xFF002873);
     final paintGrey = Paint()..color = const Color(0xFF9E9E9E);
 
     final centerX = circleRadius;

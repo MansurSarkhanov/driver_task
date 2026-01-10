@@ -1,11 +1,15 @@
+import 'package:driver_task/core/helpers/app_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/enums/status_enum.dart';
+import '../../../../shared/components/custom_button.dart';
 import '../../data/models/task_list_model.dart';
-import '../screens/task_detail_screen.dart';
 import 'task_info_detail.dart';
 
 class TaskTimelineList extends StatelessWidget {
@@ -52,10 +56,35 @@ class TaskTimelineItem extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         if (task.status == 'in_progress') {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => TaskDetailScreen(id: task.taskId),
+          context.push('/tasksDetail/${task.taskId}');
+        } else {
+          AppHelper.showAnimationDialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LottieBuilder.asset('assets/jsons/complated_task.json'),
+                8.verticalSpace,
+                Text(
+                  'complated_task'.tr(),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                16.verticalSpace,
+                const Divider(thickness: 0.3, color: Color(0xFFA0A0A0)),
+                4.verticalSpace,
+                CustomButton(
+                  height: 50.h,
+                  text: 'OK',
+                  color: AppColors.blueColor,
+                  clickColor: AppColors.blueColor,
+                  textColor: Colors.white,
+                  onTap: Navigator.of(context).pop,
+                ),
+              ],
             ),
+            context: context,
           );
         }
       },
@@ -73,7 +102,7 @@ class TaskTimelineItem extends StatelessWidget {
             child: TaskInfoDetail(
               address: task.address,
               distanceKm: task.distanceKm,
-              etaMin: '${task.etaMin} min',
+              etaMin: '${task.etaMin} ${'min'.tr()}',
               packagesCount: task.packagesCount,
               title: task.title,
             ),

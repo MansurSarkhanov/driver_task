@@ -1,4 +1,5 @@
 import 'package:driver_task/core/constants/icon_path.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,7 +42,7 @@ class TaskInfoDetail extends StatelessWidget {
             12.w.horizontalSpace,
             _InfoItem(IconPath.locatoinPath, '$distanceKm km'),
             12.w.horizontalSpace,
-            _InfoItem(IconPath.box18Path, "$packagesCount bags"),
+            _InfoItem(IconPath.box18Path, "$packagesCount ${'bags'.tr()}"),
           ],
         ),
         16.verticalSpace,

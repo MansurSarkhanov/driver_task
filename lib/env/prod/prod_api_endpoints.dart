@@ -7,4 +7,7 @@ final class ProdApiEndpoints implements ApiEndpoints {
 
   @override
   String get taskDetail => '/tasks'.connectToService();
+
+  @override
+  String taskStart(String id) => '/tasks/$id/scan'.connectToService();
 }

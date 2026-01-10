@@ -52,7 +52,6 @@ class RouteCubit extends Cubit<RouteState> {
 
     final Set<Marker> markers = _buildMarkers(
       routes: route,
-      startMarker: startMarker,
       endMarker: endMarker,
     );
     emit(
@@ -69,8 +68,6 @@ class RouteCubit extends Cubit<RouteState> {
 
   Set<Marker> _buildMarkers({
     required RouteModel routes,
-    BitmapDescriptor? startMarker,
-    BitmapDescriptor? wayPointMarker,
     BitmapDescriptor? endMarker,
   }) {
     final Set<Marker> markers = {};
@@ -80,34 +77,13 @@ class RouteCubit extends Cubit<RouteState> {
 
       markers.add(
         Marker(
-          markerId: MarkerId('leg_start_$i'),
-          position: LatLng(
-            leg.startLocation.latitude,
-            leg.startLocation.longitude,
-          ),
-          icon: i == 0
-              ? (startMarker ?? BitmapDescriptor.defaultMarker)
-              : wayPointMarker ??
-                    BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueOrange,
-                    ),
-          infoWindow: InfoWindow(title: i == 0 ? 'Çıxış' : 'Ara Nokta $i'),
-        ),
-      );
-
-      markers.add(
-        Marker(
           markerId: MarkerId('leg_end_$i'),
           position: LatLng(leg.endLocation.latitude, leg.endLocation.longitude),
           icon: i == routes.legs.length - 1
               ? (endMarker ?? BitmapDescriptor.defaultMarker)
-              : wayPointMarker ??
-                    BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueAzure,
-                    ),
-          infoWindow: InfoWindow(
-            title: i == routes.legs.length - 1 ? 'Varış' : 'Ara Nokta ${i + 1}',
-          ),
+              : BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueAzure,
+                ),
         ),
       );
     }

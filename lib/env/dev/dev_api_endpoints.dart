@@ -8,4 +8,7 @@ final class DevApiEndpoints implements ApiEndpoints {
 
   @override
   String get taskDetail => '/tasks'.connectToService();
+
+  @override
+  String taskStart(String id) => '/tasks/$id/scan'.connectToService();
 }

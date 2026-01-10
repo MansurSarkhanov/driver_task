@@ -26,4 +26,13 @@ final class TaskRepository implements TaskDomain {
     }
     return Right(response.error!.message);
   }
+
+  @override
+  Future<Either<bool, String>> startTask(String id) async {
+    final response = await services.startTask(id);
+    if (response.isSuccess) {
+      return Left(true);
+    }
+    return Right(response.error!.message);
+  }
 }

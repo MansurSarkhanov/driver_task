@@ -2,8 +2,9 @@
   "tasks": "Tasks",
   "loading": "Loading...",
   "language": "Language",
-  "scan": "Scan",
-  "handover": "Handover",
-  "completed": "Completed",
-  "failed": "Failed"
+  "complated_task": "Task completed!",
+  "list": "List",
+  "map": "Map",
+  "min": "min",
+  "bags": "bags"
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,32 +11,13 @@ import 'map_location_states.dart';
 class MapLocationCubit extends Cubit<MapLocationState> {
   MapLocationCubit() : super(LocationInitial());
   Timer? _debounce;
-  void selectAddressFromSearch({
-    required String address,
-    required LatLng currentLocationLatLng,
-    LatLng? toLatLng,
-  }) {
-    emit(
-      LocationSearchSelected(
-        address: address,
-        toLatLng: toLatLng,
-        currentLocation: currentLocationLatLng,
-      ),
-    );
-  }
 
   Future<void> pickAddressOnMap({
     required LatLng currentLocationLatLng,
     LatLng? toLatLng,
   }) async {
-    final address = await getAddressFromCoordinates(
-      currentLocationLatLng.latitude,
-      currentLocationLatLng.longitude,
-    );
     emit(
       LocationPickedOnMap(
-        fromAddress: address,
-        toAddress: address,
         toLatLng: toLatLng,
         currentLocation: currentLocationLatLng,
       ),
@@ -62,20 +42,6 @@ class MapLocationCubit extends Cubit<MapLocationState> {
       );
       context.read<GoogleMapCubit>().setMapMoving(false);
     });
-  }
-
-  Future<String> getAddressFromCoordinates(
-    double latitude,
-    double longitude,
-  ) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      latitude,
-      longitude,
-    );
-    Placemark placemark = placemarks.first;
-    String address =
-        '${placemark.street}, ${placemark.locality}, ${placemark.country}';
-    return address;
   }
 
   void centerToCurrentLocation(GoogleMapController controller) async {

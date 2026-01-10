@@ -1,4 +1,5 @@
 import 'package:driver_task/core/constants/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,12 +26,12 @@ class TaskViewTabBar extends StatelessWidget {
       child: Row(
         children: [
           _TabItem(
-            title: 'List',
+            title: "list".tr(),
             isActive: selected == TaskViewType.list,
             onTap: () => onChanged(TaskViewType.list),
           ),
           _TabItem(
-            title: 'Map',
+            title: "map".tr(),
             isActive: selected == TaskViewType.map,
             onTap: () => onChanged(TaskViewType.map),
           ),

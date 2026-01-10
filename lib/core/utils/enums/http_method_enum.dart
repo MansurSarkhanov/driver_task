@@ -1,1 +1,1 @@
-enum HttpMethodEnum { GET, POST, PUT, DELETE }
+enum HttpMethodEnum { GET, POST, PUT, DELETE, PATCH }

@@ -56,6 +56,15 @@ class RequestExecutor {
             options: options,
           );
           break;
+        case HttpMethodEnum.PATCH:
+          response = await dio.patch(
+            url,
+            data: data,
+            queryParameters: query,
+            cancelToken: cancelToken,
+            options: options,
+          );
+          break;
         case HttpMethodEnum.DELETE:
           response = await dio.delete(
             url,

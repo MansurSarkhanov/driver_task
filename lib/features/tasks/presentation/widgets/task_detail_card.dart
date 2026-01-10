@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../shared/components/custom_button.dart';
+import '../../../map/presentation/bloc/google_map_cubit.dart';
+import '../../../map/presentation/bloc/map_location_cubit.dart';
 import '../bloc/cubit/task_detail_cubit.dart';
 import '../bloc/state/task_detail_states.dart';
 import 'task_info_detail.dart';
@@ -123,7 +126,25 @@ class TaskDetailCard extends StatelessWidget {
                                   .toList(),
                             ),
                             16.verticalSpace,
-                            CustomButton(text: 'Start Task'),
+                            CustomButton(
+                              text: 'Start Task',
+                              onTap: () {
+                                final destinationLocation =
+                                    state.taskDetail.location;
+                                context
+                                    .read<GoogleMapCubit>()
+                                    .searchAndCalculateRoute(
+                                      origin: context
+                                          .read<MapLocationCubit>()
+                                          .state
+                                          .currentLocation,
+                                      destination: LatLng(
+                                        destinationLocation.lat,
+                                        destinationLocation.lng,
+                                      ),
+                                    );
+                              },
+                            ),
                           ],
                         );
                       }
