@@ -1,13 +1,13 @@
 
 # Driver Task
 
-## Uygulamanın Amacı
+## Purpose of the Application
 
-Driver Task, kuryeler/şoförler için görev yönetimi sağlayan bir mobil uygulamadır. Kullanıcılar, kendilerine atanan teslimat görevlerini listeleyebilir, detaylarını görebilir, harita üzerinde rota takibi yapabilir ve teslimat süreçlerini yönetebilirler. Uygulama, görevlerin başlatılması, başarısız olarak işaretlenmesi ve paketlerin barkod ile taranması gibi işlevler sunar.
+Driver Task is a mobile application for couriers/drivers to manage their delivery tasks. Users can list their assigned delivery tasks, view details, track routes on the map, and manage the delivery process. The app provides features such as starting tasks, marking them as failed, and scanning packages via barcode.
 
-## Kullanılan Teknolojiler ve Paketler
+## Technologies and Packages Used
 
-- **Flutter**: Uygulamanın temel çatısı
+- **Flutter**: Main framework
 - **State Management**: `bloc`, `flutter_bloc`
 - **Network**: `dio`, `equatable`
 - **UI**: `flutter_screenutil`, `lottie`, `flutter_svg`, `shimmer`, `flutter_staggered_animations`
@@ -15,46 +15,46 @@ Driver Task, kuryeler/şoförler için görev yönetimi sağlayan bir mobil uygu
 - **Router**: `go_router`
 - **Map**: `google_maps_flutter`, `geolocator`, `geocoding`, `google_polyline_algorithm`
 - **Dependency Injection**: `get_it`
-- **Barcode/QR Okuyucu**: `mobile_scanner`
-- **Çevre Değişkenleri**: `flutter_dotenv`
+- **Barcode/QR Scanner**: `mobile_scanner`
+- **Environment Variables**: `flutter_dotenv`
 - **Error Handling**: `either_dart`
 
-## Ana Özellikler
+## Main Features
 
-- Görev listesi ve detayları
-- Görev başlatma, başarısız işaretleme, paket tarama
-- Google Maps ile rota ve konum takibi
-- Barkod/QR kod ile paket doğrulama
-- Çoklu dil desteği (TR, EN, RU, AZ)
-- Modern ve animasyonlu kullanıcı arayüzü
+- Task list and details
+- Start, fail, and scan tasks
+- Route and location tracking with Google Maps
+- Package verification via barcode/QR code
+- Multi-language support (TR, EN, RU, AZ)
+- Modern and animated user interface
 
-## Proje Mimarisi
+## Project Architecture
 
-- **Feature-based** dosya yapısı (features, core, shared)
-- Bloc tabanlı durum yönetimi
-- Servis ve repository katmanları ile ayrık iş mantığı
-- Modüler ve ölçeklenebilir yapı
+- **Feature-based** folder structure (features, core, shared)
+- Bloc-based state management
+- Service and repository layers for separated business logic
+- Modular and scalable structure
 
-## Ekran Görüntüsü / Tanıtım Videosu
+## Screenshot / Demo Video
 
-Aşağıdaki video uygulamanın genel işleyişini göstermektedir:
+The following video demonstrates the general workflow of the application:
 
-[![Uygulama Tanıtım Videosu](https://img.youtube.com/vi/placeholder/0.jpg)](assets/videos/app_review.mp4)
+[![App Demo Video](https://img.youtube.com/vi/placeholder/0.jpg)](assets/videos/app_review.mp4)
 
-> Videoyu izlemek için yukarıdaki görsele tıklayabilir veya `assets/videos/app_review.mp4` dosyasını açabilirsiniz.
+> Click the image above or open `assets/videos/app_review.mp4` to watch the video.
 
-## Kurulum ve Çalıştırma
+## Installation and Running
 
-1. Bağımlılıkları yükleyin:
+1. Install dependencies:
 	```sh
 	flutter pub get
 	```
-2. Çevre dosyalarını (.env) ve gerekli API anahtarlarını ekleyin.
-3. Uygulamayı başlatın:
+2. Add environment files (.env) and required API keys.
+3. Run the application:
 	```sh
 	flutter run
 	```
 
-## Lisans
+## License
 
 MIT
