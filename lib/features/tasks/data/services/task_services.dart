@@ -10,7 +10,6 @@ import '../models/task_list_model.dart';
 abstract class ITaskServices {
   Future<ApiResult<TaskResponse>> getTaskList();
   Future<ApiResult<TaskDetailResponse>> getTaskDetail(String id);
-  Future<ApiResult<bool>> startTask(String id);
 }
 
 final class TaskServices extends RequestExecutor implements ITaskServices {
@@ -30,15 +29,6 @@ final class TaskServices extends RequestExecutor implements ITaskServices {
       url: "${ApiEnviroment.current.tasksList}/$id",
       parser: (json) => TaskDetailResponse.fromJson(json),
       method: HttpMethodEnum.GET,
-    );
-  }
-
-  @override
-  Future<ApiResult<bool>> startTask(String id) {
-    return executeRequest(
-      url: ApiEnviroment.current.taskStart(id),
-      parser: (json) => true,
-      method: HttpMethodEnum.PATCH,
     );
   }
 }

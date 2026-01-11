@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart' as request;
 
 final class DioClient {
-  static final DioClient _instance = DioClient._internal();
+  static final DioClient instance = DioClient._internal();
   late final request.Dio _dio;
-  factory DioClient() => _instance;
+  factory DioClient() => instance;
   DioClient._internal() {
     _dio = _createSecureDio();
   }

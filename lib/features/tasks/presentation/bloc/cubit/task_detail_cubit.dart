@@ -15,4 +15,6 @@ class TaskDetailCubit extends Cubit<TaskDetailStates> {
       (error) => emit(TaskDetailError(message: error)),
     );
   }
+
+ 
 }

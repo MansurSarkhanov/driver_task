@@ -1,4 +1,6 @@
 import 'package:driver_task/core/constants/icon_path.dart';
+import 'package:driver_task/features/task_process/presentation/bloc/task_process_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,7 +57,7 @@ class TaskDetailCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 30,
                         spreadRadius: 10,
                         offset: const Offset(0, -4),
@@ -127,22 +129,30 @@ class TaskDetailCard extends StatelessWidget {
                             ),
                             16.verticalSpace,
                             CustomButton(
-                              text: 'Start Task',
-                              onTap: () {
-                                final destinationLocation =
-                                    state.taskDetail.location;
-                                context
-                                    .read<GoogleMapCubit>()
-                                    .searchAndCalculateRoute(
-                                      origin: context
-                                          .read<MapLocationCubit>()
-                                          .state
-                                          .currentLocation,
-                                      destination: LatLng(
-                                        destinationLocation.lat,
-                                        destinationLocation.lng,
-                                      ),
+                              text: 'start_task'.tr(),
+                              onTap: () async {
+                                final result = await context
+                                    .read<TaskProcessCubit>()
+                                    .startTask(
+                                      id: state.taskDetail.taskId,
+                                      context: context,
                                     );
+                                if (result != null) {
+                                  final destinationLocation =
+                                      state.taskDetail.location;
+                                  context
+                                      .read<GoogleMapCubit>()
+                                      .searchAndCalculateRoute(
+                                        origin: context
+                                            .read<MapLocationCubit>()
+                                            .state
+                                            .currentLocation,
+                                        destination: LatLng(
+                                          destinationLocation.lat,
+                                          destinationLocation.lng,
+                                        ),
+                                      );
+                                }
                               },
                             ),
                           ],

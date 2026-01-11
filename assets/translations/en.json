@@ -6,5 +6,7 @@
   "list": "List",
   "map": "Map",
   "min": "min",
-  "bags": "bags"
+  "bags": "bags",
+  "start_task": "Start Task",
+  "complete_task": "Complete Task"
 }

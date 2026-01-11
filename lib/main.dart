@@ -1,4 +1,5 @@
 import 'package:driver_task/core/routes/app_router.dart';
+import 'package:driver_task/injection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,6 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await init();
   runApp(
     EasyLocalization(
       supportedLocales: LocalizationManager.supportedLocales,
