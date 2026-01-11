@@ -24,6 +24,7 @@ class CustomButton extends StatelessWidget {
     this.isLoading,
     this.isActive,
     this.loadingColor,
+    this.fontSize,
   });
   final Widget? child;
   final double? width;
@@ -39,6 +40,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final bool? isLoading;
   final bool? isActive;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class CustomButton extends StatelessWidget {
               }
               return (isActive ?? true)
                   ? (color ?? AppColors.blueColor)
-                  : Colors.blue.shade300;
+                  : Colors.blue.shade100;
             }),
           ),
           onPressed: (isActive ?? true) ? onTap : () {},
@@ -86,11 +88,10 @@ class CustomButton extends StatelessWidget {
                         text.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 16.sp,
-
+                          fontSize: fontSize ?? 16.sp,
                           color: isActive ?? true
                               ? (textColor ?? Colors.white)
-                              : Colors.black,
+                              : Colors.white,
                         ),
                       ),
                     ),

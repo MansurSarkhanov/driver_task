@@ -1,11 +1,9 @@
-import 'package:driver_task/core/constants/icon_path.dart';
 import 'package:driver_task/features/task_process/presentation/bloc/task_process_cubit.dart';
 import 'package:driver_task/features/task_process/presentation/bloc/task_process_states.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../shared/components/custom_button.dart';
@@ -13,6 +11,7 @@ import '../../../map/presentation/bloc/google_map_cubit.dart';
 import '../../../map/presentation/bloc/map_location_cubit.dart';
 import '../bloc/cubit/task_detail_cubit.dart';
 import '../bloc/state/task_detail_states.dart';
+import 'package_tile.dart';
 import 'task_info_detail.dart';
 
 class TaskDetailCard extends StatelessWidget {
@@ -96,42 +95,14 @@ class TaskDetailCard extends StatelessWidget {
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: state.taskDetail.packages
-                                  .map(
-                                    (e) => Padding(
-                                      padding: const EdgeInsets.only(top: 16.0),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(IconPath.boxPath),
-                                          8.horizontalSpace,
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(e.packageId),
-                                              Text("${e.shipmentId} shipment"),
-                                            ],
-                                          ),
-                                          Spacer(),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text("Barcode"),
-                                              Text(e.barcode),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
+                                  .map((e) => PackageTile(taskPackage: e))
                                   .toList(),
                             ),
                             16.verticalSpace,
                             BlocConsumer<TaskProcessCubit, TaskProcessStates>(
                               listener: (context, processState) {
-                                if (processState is TaskProcessSuccess) {
+                                if (processState is TaskProcessSuccess &&
+                                    processState.isLoading == false) {
                                   final destinationLocation =
                                       state.taskDetail.location;
                                   context
@@ -150,62 +121,68 @@ class TaskDetailCard extends StatelessWidget {
                               },
                               builder: (context, processState) {
                                 if (processState is TaskProcessSuccess) {
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CustomButton(
-                                          borderColor: Colors.red,
-                                          text: 'failed'.tr(),
-                                          isLoading:
-                                              processState
-                                                  is TaskProcessLoading,
-                                          textColor: Colors.red,
-                                          color: Colors.red.shade100,
-                                          onTap: () async {
-                                            await context
-                                                .read<TaskProcessCubit>()
-                                                .failTask(
-                                                  id: state.taskDetail.taskId,
-                                                  context: context,
-                                                );
-                                          },
+                                  return SafeArea(
+                                    top: false,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: CustomButton(
+                                            fontSize: 14.sp,
+                                            clickColor: Colors.red.shade50,
+                                            loadingColor: Colors.red,
+                                            // isLoading: processState.isLoading,
+                                            borderColor: Colors.red,
+                                            text: 'failed'.tr(),
+                                            textColor: Colors.red,
+                                            color: Colors.red.shade50,
+                                            onTap: () async {
+                                              await context
+                                                  .read<TaskProcessCubit>()
+                                                  .failTask(
+                                                    id: state.taskDetail.taskId,
+                                                    context: context,
+                                                  );
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      8.horizontalSpace,
-                                      Expanded(
-                                        flex: 2,
-                                        child: CustomButton(
-                                          text: 'scan'.tr(),
-                                          isLoading:
-                                              processState
-                                                  is TaskProcessLoading,
-                                          onTap: () async {
-                                            await context
-                                                .read<TaskProcessCubit>()
-                                                .scanTasks(
-                                                  taskDetailModel:
-                                                      state.taskDetail,
-                                                  id: state.taskDetail.taskId,
-                                                  context: context,
-                                                );
-                                          },
+                                        8.horizontalSpace,
+                                        Expanded(
+                                          flex: 2,
+                                          child: CustomButton(
+                                            text: 'scan'.tr(),
+                                            isLoading: processState.isLoading,
+                                            onTap: () async {
+                                              await context
+                                                  .read<TaskProcessCubit>()
+                                                  .scanTasks(
+                                                    taskDetailModel:
+                                                        state.taskDetail,
+                                                    id: state.taskDetail.taskId,
+                                                    context: context,
+                                                  );
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   );
                                 }
-                                return CustomButton(
-                                  text: 'start_task'.tr(),
-                                  isLoading: processState is TaskProcessLoading,
-                                  onTap: () async {
-                                    await context
-                                        .read<TaskProcessCubit>()
-                                        .startTask(
-                                          id: state.taskDetail.taskId,
-                                          context: context,
-                                        );
-                                  },
+                                return SafeArea(
+                                  top: false,
+                                  child: CustomButton(
+                                    text: 'start_task'.tr(),
+                                    isLoading:
+                                        processState is TaskProcessLoading,
+                                    onTap: () async {
+                                      await context
+                                          .read<TaskProcessCubit>()
+                                          .startTask(
+                                            id: state.taskDetail.taskId,
+                                            context: context,
+                                          );
+                                    },
+                                  ),
                                 );
                               },
                             ),

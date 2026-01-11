@@ -54,7 +54,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         return Scaffold(
           backgroundColor: AppColors.backgroundColor,
           body: state.currentLocation == null
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColors.blueColor),
+                )
               : BlocListener<GoogleMapCubit, GoogleMapState>(
                   listener: (context, state) {
                     if (state is GoogleMapRouteCalculatedState) {

@@ -27,7 +27,6 @@ class TaskProcessCubit extends Cubit<TaskProcessStates> {
     required String id,
     required BuildContext context,
   }) async {
-    emit(TaskProcessSuccess(isLoading: true));
     final result = await repository.failTask(id);
     result.fold(
       (success) => context.pop(),
@@ -40,10 +39,11 @@ class TaskProcessCubit extends Cubit<TaskProcessStates> {
     required BuildContext context,
     required TaskDetailModel taskDetailModel,
   }) async {
+    emit(TaskProcessSuccess(isLoading: true));
     final result = await repository.scanTasks(id);
-    result.fold(
-      (success) => context.push(Routes.scanPackages, extra: taskDetailModel),
-      (error) => emit(TaskProcessError(message: error)),
-    );
+    result.fold((success) {
+      emit(TaskProcessSuccess(isLoading: false));
+      context.push(Routes.scanPackages, extra: taskDetailModel);
+    }, (error) => emit(TaskProcessError(message: error)));
   }
 }

@@ -1,23 +1,4 @@
-import 'package:driver_task/features/map/domain/google_map_domain.dart';
-import 'package:driver_task/features/splash/presentation/screens/splash_screen.dart';
-import 'package:driver_task/features/task_process/domain/task_process_domain.dart';
-import 'package:driver_task/features/task_process/presentation/bloc/task_process_cubit.dart';
-import 'package:driver_task/features/task_process/presentation/screens/scan_packages_screen.dart';
-import 'package:driver_task/features/tasks/data/models/task_detail_response.dart';
-import 'package:driver_task/features/tasks/domain/task_domain.dart';
-import 'package:driver_task/features/tasks/presentation/bloc/cubit/task_list_cubit.dart';
-import 'package:driver_task/features/tasks/presentation/screens/task_detail_screen.dart';
-import 'package:driver_task/features/tasks/presentation/screens/task_list_screen.dart';
-import 'package:driver_task/injection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../features/map/presentation/bloc/google_map_cubit.dart';
-import '../../features/map/presentation/bloc/map_location_cubit.dart';
-import '../../features/map/presentation/bloc/route_cubit.dart';
-import '../../features/tasks/presentation/bloc/cubit/task_detail_cubit.dart';
-import 'routes.dart';
+import 'package:driver_task/core/routes/index.dart';
 
 final _appRouterKey = GlobalKey<NavigatorState>();
 

@@ -11,5 +11,10 @@
   "complete_task": "Tapşırığı tamamla",
   "scan_packages": "Paketləri skan et",
   "scan": " Skan et",
-  "failed": "Uğursuz"
+  "failed": "Uğursuz",
+  "shipment": "yükvurma",
+  "handover": "Təslim et",
+  "bags_scanned": "çantalar skan edilib",
+  "success_handover": "Bu çantalar uğurla idarə olundu.",
+  "next_task": "Növbəti Tapşırıq"
 }

@@ -4,10 +4,11 @@ final class AppHelper {
   static void showAnimationDialog({
     required Widget child,
     required BuildContext context,
+    bool? barrierDismissible,
   }) {
     showGeneralDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: barrierDismissible ?? true,
       barrierLabel: '',
       transitionDuration: Duration(milliseconds: 400),
       pageBuilder: (context, animation, secondaryAnimation) {

@@ -1,16 +1,16 @@
 import 'package:driver_task/core/constants/app_colors.dart';
+import 'package:driver_task/core/helpers/app_helper.dart';
+import 'package:driver_task/features/tasks/presentation/widgets/package_tile.dart';
 import 'package:driver_task/shared/components/custom_button.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/constants/icon_path.dart';
+import '../../../../core/routes/index.dart';
 import '../../../../shared/components/custom_appbar.dart';
 import '../../../../shared/components/custom_leading.dart';
-import '../../../tasks/data/models/task_detail_response.dart';
 
 class ScanPackagesPage extends StatefulWidget {
   const ScanPackagesPage({super.key, required this.taskDetailModel});
@@ -22,16 +22,30 @@ class ScanPackagesPage extends StatefulWidget {
 
 class _ScanPackagesPageState extends State<ScanPackagesPage> {
   final Set<String> scannedBarcodes = {};
+  final MobileScannerController cameraController = MobileScannerController();
 
-  void _onDetect(BarcodeCapture capture) {
+  Future<void> _onDetect(BarcodeCapture capture) async {
     for (final barcode in capture.barcodes) {
+      await Future.delayed(Duration(seconds: 2));
       final String? value = barcode.rawValue;
-      if (value != null && !scannedBarcodes.contains(value)) {
+      print('Scanned barcode: $value');
+      if (value != null &&
+          !scannedBarcodes.contains(value) &&
+          widget.taskDetailModel.packages.any(
+            (package) => package.barcode == value,
+          )) {
         setState(() {
           scannedBarcodes.add(value);
         });
       }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scannedBarcodes.clear();
+    cameraController.dispose();
   }
 
   @override
@@ -59,7 +73,10 @@ class _ScanPackagesPageState extends State<ScanPackagesPage> {
                 SizedBox(
                   height: 220,
                   width: double.infinity,
-                  child: MobileScanner(onDetect: _onDetect),
+                  child: MobileScanner(
+                    controller: cameraController,
+                    onDetect: _onDetect,
+                  ),
                 ),
                 Positioned(
                   top: 16,
@@ -90,7 +107,7 @@ class _ScanPackagesPageState extends State<ScanPackagesPage> {
               padding: const EdgeInsets.all(12),
               color: Colors.black,
               child: Text(
-                '${scannedBarcodes.length} of ${widget.taskDetailModel.packages.length} bag(s) scanned',
+                '${scannedBarcodes.length} of ${widget.taskDetailModel.packages.length} ${'bags_scanned'.tr()}',
                 style: const TextStyle(color: Colors.white),
               ),
             ),
@@ -111,32 +128,10 @@ class _ScanPackagesPageState extends State<ScanPackagesPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: widget.taskDetailModel.packages
                               .map(
-                                (e) => Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(IconPath.boxPath),
-                                      8.horizontalSpace,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(e.packageId),
-                                          Text("${e.shipmentId} shipment"),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Barcode"),
-                                          Text(e.barcode),
-                                        ],
-                                      ),
-                                    ],
+                                (e) => PackageTile(
+                                  taskPackage: e,
+                                  isScanned: scannedBarcodes.contains(
+                                    e.barcode,
                                   ),
                                 ),
                               )
@@ -146,23 +141,50 @@ class _ScanPackagesPageState extends State<ScanPackagesPage> {
 
                       // Handover Button
                       CustomButton(
-                        text: 'Handover',
-                        color:
+                        text: 'handover'.tr(),
+                        isActive:
                             scannedBarcodes.length ==
-                                widget.taskDetailModel.packages.length
-                            ? Colors.blue
-                            : Colors.grey[300],
-                        onTap:
-                            scannedBarcodes.length ==
-                                widget.taskDetailModel.packages.length
-                            ? () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Handover completed'),
+                            widget.taskDetailModel.packages.length,
+                        color: Colors.blue,
+                        onTap: () {
+                          AppHelper.showAnimationDialog(
+                            barrierDismissible: false,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(IconPath.taskComplated),
+                                8.verticalSpace,
+                                Text(
+                                  'complated_task'.tr(),
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                );
-                              }
-                            : null,
+                                ),
+                                4.verticalSpace,
+                                Text(
+                                  'success_handover'.tr(),
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                16.verticalSpace,
+                                CustomButton(
+                                  height: 50.h,
+                                  text: 'next_task'.tr(),
+                                  color: AppColors.blueColor,
+                                  clickColor: AppColors.blueColor,
+                                  textColor: Colors.white,
+                                  onTap: () {
+                                    context.go(Routes.taskList);
+                                  },
+                                ),
+                              ],
+                            ),
+                            context: context,
+                          );
+                        },
                       ),
                     ],
                   ),

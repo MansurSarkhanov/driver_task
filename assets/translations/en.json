@@ -11,5 +11,10 @@
   "complete_task": "Complete Task",
   "scan_packages": "Scan Packages",
   "scan": " Scan",
-  "failed": "Failed"
+  "failed": "Failed",
+  "shipment": "shipment",
+  "handover": "Handover",
+  "bags_scanned": "bag(s) scanned",
+  "success_handover": "These bags were handled successfully.",
+  "next_task": "Next Task"
 }
