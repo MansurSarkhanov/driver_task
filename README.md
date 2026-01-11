@@ -40,9 +40,11 @@ Driver Task is a mobile application for couriers/drivers to manage their deliver
 The following video demonstrates the general workflow of the application:
 
 ## 📲 App Demo
-
+Android Real Device:
 [▶️ Click here to watch the full app demo video](https://firebasestorage.googleapis.com/v0/b/mono-e4a22.appspot.com/o/app_review.mp4?alt=media&token=1db169fc-68c1-40f8-9013-5e693176e903)
 
+IOS Simulator:
+[▶️ Click here to watch the full app demo video](https://firebasestorage.googleapis.com/v0/b/mono-e4a22.appspot.com/o/app_review_ios.mp4?alt=media&token=e7d9e6c9-34cd-43a8-add4-435549236025)
 
 
 > If the video does not play, open `assets/videos/review.mp4` manually.
