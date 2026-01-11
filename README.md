@@ -41,7 +41,7 @@ The following video demonstrates the general workflow of the application:
 
 ## 📲 App Demo
 
-[!Watch the video](https://firebasestorage.googleapis.com/v0/b/mono-e4a22.appspot.com/o/app_review.mp4?alt=media&token=1db169fc-68c1-40f8-9013-5e693176e903)
+[▶️ Click here to watch the full app demo video](https://firebasestorage.googleapis.com/v0/b/mono-e4a22.appspot.com/o/app_review.mp4?alt=media&token=1db169fc-68c1-40f8-9013-5e693176e903)
 
 
 
