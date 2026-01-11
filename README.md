@@ -41,7 +41,7 @@ The following video demonstrates the general workflow of the application:
 
 [![App Demo Video](https://img.youtube.com/vi/placeholder/0.jpg)](assets/videos/app_review.mp4)
 
-> Click the image above or open `assets/videos/app_review.mp4` to watch the video.
+> Click the image above or open `assets/videos/review.mp4` to watch the video.
 
 ## Installation and Running
 
