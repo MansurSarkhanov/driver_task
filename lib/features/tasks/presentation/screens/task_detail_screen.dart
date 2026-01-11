@@ -137,6 +137,14 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                               left: context.dynamicWidth(0.05),
                               top: context.dynamicHeight(0.07),
                               child: CustomLeading(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(
+                                      0xFF000000,
+                                    ).withValues(alpha: 0.16),
+                                    blurRadius: 14,
+                                  ),
+                                ],
                                 bgColor: Colors.white,
                                 widthHeight: 40,
                                 icon: const Icon(

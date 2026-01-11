@@ -8,5 +8,8 @@
   "min": "min",
   "bags": "bags",
   "start_task": "Start Task",
-  "complete_task": "Complete Task"
+  "complete_task": "Complete Task",
+  "scan_packages": "Scan Packages",
+  "scan": " Scan",
+  "failed": "Failed"
 }

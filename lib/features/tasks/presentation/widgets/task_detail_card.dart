@@ -1,5 +1,6 @@
 import 'package:driver_task/core/constants/icon_path.dart';
 import 'package:driver_task/features/task_process/presentation/bloc/task_process_cubit.dart';
+import 'package:driver_task/features/task_process/presentation/bloc/task_process_states.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -128,16 +129,9 @@ class TaskDetailCard extends StatelessWidget {
                                   .toList(),
                             ),
                             16.verticalSpace,
-                            CustomButton(
-                              text: 'start_task'.tr(),
-                              onTap: () async {
-                                final result = await context
-                                    .read<TaskProcessCubit>()
-                                    .startTask(
-                                      id: state.taskDetail.taskId,
-                                      context: context,
-                                    );
-                                if (result != null) {
+                            BlocConsumer<TaskProcessCubit, TaskProcessStates>(
+                              listener: (context, processState) {
+                                if (processState is TaskProcessSuccess) {
                                   final destinationLocation =
                                       state.taskDetail.location;
                                   context
@@ -153,6 +147,66 @@ class TaskDetailCard extends StatelessWidget {
                                         ),
                                       );
                                 }
+                              },
+                              builder: (context, processState) {
+                                if (processState is TaskProcessSuccess) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: CustomButton(
+                                          borderColor: Colors.red,
+                                          text: 'failed'.tr(),
+                                          isLoading:
+                                              processState
+                                                  is TaskProcessLoading,
+                                          textColor: Colors.red,
+                                          color: Colors.red.shade100,
+                                          onTap: () async {
+                                            await context
+                                                .read<TaskProcessCubit>()
+                                                .failTask(
+                                                  id: state.taskDetail.taskId,
+                                                  context: context,
+                                                );
+                                          },
+                                        ),
+                                      ),
+                                      8.horizontalSpace,
+                                      Expanded(
+                                        flex: 2,
+                                        child: CustomButton(
+                                          text: 'scan'.tr(),
+                                          isLoading:
+                                              processState
+                                                  is TaskProcessLoading,
+                                          onTap: () async {
+                                            await context
+                                                .read<TaskProcessCubit>()
+                                                .scanTasks(
+                                                  taskDetailModel:
+                                                      state.taskDetail,
+                                                  id: state.taskDetail.taskId,
+                                                  context: context,
+                                                );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return CustomButton(
+                                  text: 'start_task'.tr(),
+                                  isLoading: processState is TaskProcessLoading,
+                                  onTap: () async {
+                                    await context
+                                        .read<TaskProcessCubit>()
+                                        .startTask(
+                                          id: state.taskDetail.taskId,
+                                          context: context,
+                                        );
+                                  },
+                                );
                               },
                             ),
                           ],

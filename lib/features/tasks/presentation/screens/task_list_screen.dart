@@ -1,23 +1,27 @@
 import 'package:driver_task/core/constants/app_colors.dart';
 import 'package:driver_task/features/tasks/presentation/bloc/cubit/task_list_cubit.dart';
 import 'package:driver_task/features/tasks/presentation/bloc/state/task_list_states.dart';
+import 'package:driver_task/features/tasks/presentation/widgets/language_tile.dart';
+import 'package:driver_task/shared/shimmers/task_item_shimmer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/localization_manager.dart';
+import '../../../../shared/components/custom_appbar.dart';
 import '../widgets/task_timeline_list.dart';
 import '../widgets/task_view_tabbar.dart';
 
-class TaksListScreen extends StatefulWidget {
-  const TaksListScreen({super.key});
+class TaskListScreen extends StatefulWidget {
+  const TaskListScreen({super.key});
 
   @override
-  State<TaksListScreen> createState() => _TaksListScreenState();
+  State<TaskListScreen> createState() => _TaskListScreenState();
 }
 
-class _TaksListScreenState extends State<TaksListScreen> {
+class _TaskListScreenState extends State<TaskListScreen> {
   TaskViewType _viewType = TaskViewType.list;
   @override
   Widget build(BuildContext context) {
@@ -44,12 +48,19 @@ class _TaksListScreenState extends State<TaksListScreen> {
         BlocBuilder<TaskListCubit, TaskListStates>(
           builder: (context, state) {
             if (state is TaskListLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.blue),
-              );
+              return Expanded(child: TaskItemShimmer(itemCount: 8));
             }
             if (state is TaskListSuccess) {
-              return Expanded(child: TaskTimelineList(tasks: state.tasks));
+              return Expanded(
+                child: RefreshIndicator(
+                  color: AppColors.blueColor,
+                  backgroundColor: Colors.white,
+                  onRefresh: () async {
+                    return context.read<TaskListCubit>().fetchTaskList();
+                  },
+                  child: TaskTimelineList(tasks: state.tasks),
+                ),
+              );
             }
             return SizedBox.shrink();
           },
@@ -58,23 +69,13 @@ class _TaksListScreenState extends State<TaksListScreen> {
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
+  PreferredSizeWidget _appBar() {
+    return CustomAppBar(
+      title: 'tasks'.tr(),
       leading: Builder(
         builder: (context) => IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
-      ),
-
-      title: Text(
-        'tasks'.tr(),
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w600,
+          onPressed: () => Scaffold.of(context).openDrawer(),
         ),
       ),
       actions: [
@@ -88,8 +89,6 @@ class _TaksListScreenState extends State<TaksListScreen> {
         ),
         12.horizontalSpace,
       ],
-      centerTitle: true,
-      backgroundColor: AppColors.backgroundColor,
     );
   }
 
@@ -107,53 +106,21 @@ class _TaksListScreenState extends State<TaksListScreen> {
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
               ),
             ),
-            _languageTile(
-              context,
-              title: 'English',
-              locale: const Locale('en'),
-            ),
-            _languageTile(
-              context,
-              title: 'Русский',
-              locale: const Locale('ru'),
-            ),
-            _languageTile(
-              context,
-              title: 'Azərbaycan',
-              locale: const Locale('az'),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: LocalizationManager.supportedLanguages
+                  .map(
+                    (e) => LanguageTile(
+                      title: e.name,
+                      locale: e.locale,
+                      context: context,
+                    ),
+                  )
+                  .toList(),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _languageTile(
-    BuildContext context, {
-    required String title,
-    required Locale locale,
-  }) {
-    final isSelected = context.locale == locale;
-
-    return ListTile(
-      leading: Icon(
-        Icons.language,
-        color: isSelected ? AppColors.blueColor : Colors.grey,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16.sp,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-        ),
-      ),
-      trailing: isSelected
-          ? Icon(Icons.check, color: AppColors.blueColor)
-          : null,
-      onTap: () async {
-        await context.setLocale(locale);
-        Navigator.of(context).pop(); // drawer bağlanır
-      },
     );
   }
 }

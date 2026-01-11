@@ -8,5 +8,8 @@
   "min": "dəq",
   "bags": "bağlama",
   "start_task": "Tapşırığa başla",
-  "complete_task": "Tapşırığı tamamla"
+  "complete_task": "Tapşırığı tamamla",
+  "scan_packages": "Paketləri skan et",
+  "scan": " Skan et",
+  "failed": "Uğursuz"
 }

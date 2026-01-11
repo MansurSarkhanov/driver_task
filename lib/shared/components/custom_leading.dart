@@ -5,6 +5,9 @@ class CustomLeading extends StatelessWidget {
   final Function() onTab;
   final double widthHeight;
   final Color bgColor;
+  final Color? borderColor;
+
+  final List<BoxShadow>? boxShadow;
 
   const CustomLeading({
     super.key,
@@ -12,6 +15,8 @@ class CustomLeading extends StatelessWidget {
     required this.onTab,
     this.widthHeight = 36,
     required this.bgColor,
+    this.boxShadow,
+    this.borderColor,
   });
 
   @override
@@ -22,14 +27,10 @@ class CustomLeading extends StatelessWidget {
         width: widthHeight,
         height: widthHeight,
         decoration: BoxDecoration(
+          border: Border.all(color: borderColor ?? Colors.transparent),
           color: bgColor,
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFF000000).withValues(alpha: 0.16),
-              blurRadius: 14,
-            ),
-          ],
+          boxShadow: boxShadow,
         ),
         child: Center(child: icon),
       ),

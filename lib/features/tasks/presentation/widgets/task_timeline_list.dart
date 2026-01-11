@@ -19,7 +19,6 @@ class TaskTimelineList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       itemCount: tasks.length,
       itemBuilder: (context, index) {

@@ -2,10 +2,12 @@ import 'package:driver_task/features/map/domain/google_map_domain.dart';
 import 'package:driver_task/features/splash/presentation/screens/splash_screen.dart';
 import 'package:driver_task/features/task_process/domain/task_process_domain.dart';
 import 'package:driver_task/features/task_process/presentation/bloc/task_process_cubit.dart';
+import 'package:driver_task/features/task_process/presentation/screens/scan_packages_screen.dart';
+import 'package:driver_task/features/tasks/data/models/task_detail_response.dart';
 import 'package:driver_task/features/tasks/domain/task_domain.dart';
 import 'package:driver_task/features/tasks/presentation/bloc/cubit/task_list_cubit.dart';
-import 'package:driver_task/features/tasks/presentation/screens/taks_list_screen.dart';
 import 'package:driver_task/features/tasks/presentation/screens/task_detail_screen.dart';
+import 'package:driver_task/features/tasks/presentation/screens/task_list_screen.dart';
 import 'package:driver_task/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +38,7 @@ final GoRouter appRouter = GoRouter(
           create: (context) =>
               TaskListCubit(repository: getIt.get<TaskDomain>())
                 ..fetchTaskList(),
-          child: const TaksListScreen(),
+          child: const TaskListScreen(),
         );
       },
     ),
@@ -64,6 +66,13 @@ final GoRouter appRouter = GoRouter(
           ],
           child: TaskDetailScreen(),
         );
+      },
+    ),
+    GoRoute(
+      path: Routes.scanPackages,
+      builder: (context, state) {
+        final taskDetail = state.extra as TaskDetailModel;
+        return ScanPackagesPage(taskDetailModel: taskDetail);
       },
     ),
   ],

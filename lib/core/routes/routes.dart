@@ -3,4 +3,5 @@ final class Routes {
   static const String splash = '/splash';
   static const String taskList = '/taskList';
   static const String taskDetail = '/tasksDetail/:id';
+  static const String scanPackages = '/scanPackages';
 }

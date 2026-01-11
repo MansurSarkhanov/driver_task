@@ -84,8 +84,10 @@ class CustomButton extends StatelessWidget {
                     Center(
                       child: Text(
                         text.toString(),
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16.sp,
+
                           color: isActive ?? true
                               ? (textColor ?? Colors.white)
                               : Colors.black,

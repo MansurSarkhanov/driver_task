@@ -76,11 +76,8 @@ class RequestExecutor {
       }
       final int status = response.statusCode ?? 0;
       final body = response.data;
-      if (body == null) {
-        return ApiResult.failure(
-          error: {'error': 'Empty response body'},
-          statusCode: status,
-        );
+      if (status == 204) {
+        return ApiResult.success(data: true as T);
       }
 
       if (responseType == ResponseType.bytes) {

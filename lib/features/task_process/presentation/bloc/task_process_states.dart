@@ -5,8 +5,8 @@ class TaskProcessInitial extends TaskProcessStates {}
 class TaskProcessLoading extends TaskProcessStates {}
 
 class TaskProcessSuccess extends TaskProcessStates {
-  final String message;
-  TaskProcessSuccess({required this.message});
+  final bool isLoading;
+  TaskProcessSuccess({required this.isLoading});
 }
 
 class TaskProcessError extends TaskProcessStates {
