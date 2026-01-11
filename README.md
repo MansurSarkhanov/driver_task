@@ -25,7 +25,7 @@ Driver Task is a mobile application for couriers/drivers to manage their deliver
 - Start, fail, and scan tasks
 - Route and location tracking with Google Maps
 - Package verification via barcode/QR code
-- Multi-language support (TR, EN, RU, AZ)
+- Multi-language support (EN, RU, AZ)
 - Modern and animated user interface
 
 ## Project Architecture

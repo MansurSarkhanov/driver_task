@@ -22,7 +22,18 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  TaskViewType _viewType = TaskViewType.list;
+  final ValueNotifier<TaskViewType> _viewType = ValueNotifier(
+    TaskViewType.list,
+  );
+  final ValueNotifier<bool> _switchValue = ValueNotifier(true);
+
+  @override
+  void dispose() {
+    _viewType.dispose();
+    _switchValue.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +48,15 @@ class _TaskListScreenState extends State<TaskListScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        TaskViewTabBar(
-          selected: _viewType,
-          onChanged: (value) {
-            setState(() {
-              _viewType = value;
-            });
+        ValueListenableBuilder<TaskViewType>(
+          valueListenable: _viewType,
+          builder: (context, value, _) {
+            return TaskViewTabBar(
+              selected: value,
+              onChanged: (newValue) {
+                _viewType.value = newValue;
+              },
+            );
           },
         ),
         BlocBuilder<TaskListCubit, TaskListStates>(
@@ -79,14 +93,23 @@ class _TaskListScreenState extends State<TaskListScreen> {
         ),
       ),
       actions: [
-        CupertinoSwitch(
-          value: true,
-          onChanged: (val) {},
-          inactiveThumbColor: Colors.white,
-          inactiveTrackColor: Color(0xFFE7EEEE),
-          activeTrackColor: AppColors.greenColor,
-          trackOutlineColor: WidgetStateProperty.all(AppColors.greenColor),
+        ValueListenableBuilder<bool>(
+          valueListenable: _switchValue,
+          builder: (context, value, _) {
+            return CupertinoSwitch(
+              value: value,
+              onChanged: (val) {
+                _switchValue.value = val;
+              },
+              inactiveThumbColor: Colors.white,
+              inactiveTrackColor: const Color(0xFFE7EEEE),
+              activeTrackColor: AppColors.greenColor,
+              trackOutlineWidth: WidgetStateProperty.all(0.1),
+              trackOutlineColor: WidgetStateProperty.all(AppColors.greenColor),
+            );
+          },
         ),
+
         12.horizontalSpace,
       ],
     );
