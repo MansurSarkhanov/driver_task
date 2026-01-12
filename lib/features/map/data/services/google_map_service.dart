@@ -16,7 +16,7 @@ abstract class IGoogleMapService {
 
 final class GoogleMapService extends RequestExecutor
     implements IGoogleMapService {
-  GoogleMapService() : super(DioClient().dio);
+  GoogleMapService() : super(DioClient.instance.dio);
 
   @override
   Future<ApiResult<DirectionsResponse>> getDirections({

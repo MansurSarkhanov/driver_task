@@ -13,7 +13,7 @@ abstract class ITaskServices {
 }
 
 final class TaskServices extends RequestExecutor implements ITaskServices {
-  TaskServices() : super(DioClient().dio);
+  TaskServices() : super(DioClient.instance.dio);
   @override
   Future<ApiResult<TaskResponse>> getTaskList() {
     return executeRequest(
